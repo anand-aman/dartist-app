@@ -139,7 +139,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           height: 16,
                         ),
                         TextInputField(
-                          controller: _usernameInputController,
+                          controller: _phoneNoController,
                           textInputType: TextInputType.phone,
                           label: "Phone No.",
                         ),
