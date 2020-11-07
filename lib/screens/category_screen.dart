@@ -1,7 +1,9 @@
 import 'package:dartist_app/components/my_button.dart';
 import 'package:dartist_app/model/category.dart';
+import 'package:dartist_app/services/firebase_user.dart';
 import 'package:flutter/material.dart';
 import 'package:dartist_app/components/category_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoriesScreen extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   Category category = Category();
+  final _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 child: MyButton(
                   text: 'Continue..',
                   width: 100.0,
-                  onPressed: () {},
+                  onPressed: () async {
+                    await FirebaseCurrentUser().addCategory(category);
+                  },
                 ),
                 bottom: 20.0,
               ),
@@ -51,14 +56,3 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 }
-
-/*
-GridView.count(
-primary: false,
-padding: const EdgeInsets.all(10),
-crossAxisSpacing: 5,
-mainAxisSpacing: 5,
-crossAxisCount: 2,
-children: listBuilder(),
-)
-*/

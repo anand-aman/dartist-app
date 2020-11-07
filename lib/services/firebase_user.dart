@@ -1,3 +1,4 @@
+import 'package:dartist_app/model/category.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -35,6 +36,21 @@ class FirebaseCurrentUser {
       'photoURL': user.photoURL,
       'displayName': user.displayName,
       'lastSeen': DateTime.now(),
+    });
+  }
+
+  Future<void> addCategory(Category category) async {
+    List<String> selectedCategories = [];
+    for (int i = 0; i < category.categoryList.length; i++) {
+      if (category.categoryBool[i]) {
+        selectedCategories.add(category.categoryList[i]);
+      }
+    }
+    DocumentReference ref = _firestore.collection('users').doc(user.uid);
+    DocumentSnapshot doc = await ref.get();
+
+    ref.update({
+      'categories': selectedCategories,
     });
   }
 }
