@@ -235,7 +235,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   .set({
                                     "uid": currentUser.user.uid,
                                     "name": _usernameInputController.text,
-                                    "phoneNo": _phoneNoController,
+                                    "phoneNo": _phoneNoController.text,
                                     "email": _emailInputController.text,
                                     "isHirer": isHirer,
                                   })
