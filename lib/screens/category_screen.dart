@@ -1,3 +1,5 @@
+import 'package:dartist_app/components/my_button.dart';
+import 'package:dartist_app/model/category.dart';
 import 'package:flutter/material.dart';
 import 'package:dartist_app/components/category_card.dart';
 
@@ -7,78 +9,40 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
+  Category category = Category();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.grey,
-          body: GridView.count(
-            primary: false,
-            padding: const EdgeInsets.all(10),
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5,
-            crossAxisCount: 2,
-            children: <Widget>[
-              CategoryCard(
-                cardChild: Text(
-                  'Design',
-                  style: kTextStyle,
-                ),
+          body: Stack(
+            children: [
+              GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                itemBuilder: (BuildContext context, int index) {
+                  bool isSelected = false;
+                  return CategoryCard(
+                    text: category.categoryList[index],
+                    isSelected: category.categoryBool[index],
+                    onPress: () {
+                      setState(() {
+                        category.categoryBool[index] = !category.categoryBool[index];
+                      });
+                    },
+                  );
+                },
+                itemCount: category.categoryList.length,
               ),
-              CategoryCard(
-                cardChild: Text(
-                  'Cooking',
-                  style: kTextStyle,
+              Positioned(
+                left: MediaQuery.of(context).size.width * 0.5 - 50,
+                child: MyButton(
+                  text: 'Continue..',
+                  width: 100.0,
+                  onPressed: () {},
                 ),
-              ),
-              CategoryCard(
-                cardChild: Text(
-                  'Administrative Work',
-                  style: kTextStyle,
-                ),
-              ),
-              CategoryCard(
-                cardChild: Text(
-                  'Management',
-                  style: kTextStyle,
-                ),
-              ),
-              CategoryCard(
-                cardChild: Text(
-                  'Driving',
-                  style: kTextStyle,
-                ),
-              ),
-              CategoryCard(
-                cardChild: Text(
-                  'Work at IT ',
-                  style: kTextStyle,
-                ),
-              ),
-              CategoryCard(
-                cardChild: Text(
-                  'Research',
-                  style: kTextStyle,
-                ),
-              ),
-              CategoryCard(
-                cardChild: Text(
-                  'Computer Support',
-                  style: kTextStyle,
-                ),
-              ),
-              CategoryCard(
-                cardChild: Text(
-                  'Manual Work',
-                  style: kTextStyle,
-                ),
-              ),
-              CategoryCard(
-                cardChild: Text(
-                  'Machine Operation',
-                  style: kTextStyle,
-                ),
+                bottom: 20.0,
               ),
             ],
           ),
@@ -87,3 +51,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 }
+
+/*
+GridView.count(
+primary: false,
+padding: const EdgeInsets.all(10),
+crossAxisSpacing: 5,
+mainAxisSpacing: 5,
+crossAxisCount: 2,
+children: listBuilder(),
+)
+*/
