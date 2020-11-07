@@ -29,10 +29,11 @@ class CategoryCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                      width: 100.0,
-                      height: 100.0,
-                      child: Image.network(
-                          'https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png')),
+                    width: 100.0,
+                    height: 100.0,
+                    child: Image.network(
+                        'https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png'),
+                  ),
                   SizedBox(
                     height: 20.0,
                   ),

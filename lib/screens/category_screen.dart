@@ -45,6 +45,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   width: 100.0,
                   onPressed: () async {
                     await FirebaseCurrentUser().addCategory(category);
+                    await FirebaseCurrentUser().updateCategory(category);
                   },
                 ),
                 bottom: 20.0,

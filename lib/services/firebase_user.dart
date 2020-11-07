@@ -47,10 +47,39 @@ class FirebaseCurrentUser {
       }
     }
     DocumentReference ref = _firestore.collection('users').doc(user.uid);
-    DocumentSnapshot doc = await ref.get();
 
     ref.update({
       'categories': selectedCategories,
+    });
+  }
+
+  Future<void> updateCategory(Category category) async {
+    List<String> selectedCategories = [];
+    for (int i = 0; i < category.categoryList.length; i++) {
+      if (category.categoryBool[i]) {
+        selectedCategories.add(category.categoryList[i].toLowerCase());
+      }
+    }
+
+    DocumentReference ref = _firestore.collection('category').doc('cfdOhIiAzuSEHARrTAPK');
+    DocumentSnapshot doc = await ref.get();
+    var data = doc.data();
+    Map<String, dynamic> categoryMap = data['category'];
+    for (String str in selectedCategories) {
+      print(str);
+      if (categoryMap.containsKey(str)) {
+        List<dynamic> list = categoryMap[str];
+        if (!list.contains(currentUser.uid)) {
+          list.add(currentUser.uid);
+          categoryMap[str] = list;
+        }
+      } else {
+        List<String> list = [currentUser.uid];
+        categoryMap[str] = list;
+      }
+    }
+    ref.set({
+      'category': categoryMap,
     });
   }
 }
