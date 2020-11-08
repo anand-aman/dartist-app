@@ -31,8 +31,11 @@ class CategoryCard extends StatelessWidget {
                   Container(
                     width: 100.0,
                     height: 100.0,
-                    child: Image.network(
-                        'https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png'),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('images/${text.toLowerCase()}.png'))),
+                    ),
                   ),
                   SizedBox(
                     height: 20.0,

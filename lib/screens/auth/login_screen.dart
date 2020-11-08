@@ -1,5 +1,6 @@
 import 'package:dartist_app/components/my_button.dart';
 import 'package:dartist_app/screens/category_screen.dart';
+import 'package:dartist_app/services/check.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -138,8 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => CategoriesScreen(),
-                                    settings: RouteSettings(name: 'Category Screen'),
+                                    builder: (context) => Check(),
                                   ));
                             }
                           } catch (err) {
