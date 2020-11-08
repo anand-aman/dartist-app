@@ -8,13 +8,11 @@ class Category {
   }
   List<String> categoryList = [
     'Driver',
-    'Cook',
     'Sweeper',
     'Laundary',
     'Sanitisation',
-    'Construction',
+    'Mason',
     'Plumber',
-    'Electrician',
-    'Watchman'
+    'Security',
   ];
 }

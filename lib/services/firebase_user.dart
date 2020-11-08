@@ -1,14 +1,16 @@
 import 'package:dartist_app/model/category.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartist_app/model/app_user.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseCurrentUser {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
+//  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   static User user;
+  static AppUser appUser;
 
   User get currentUser {
     if (user != null) {
@@ -26,16 +28,17 @@ class FirebaseCurrentUser {
     });
   }
 
-  void updateUserData(User user) async {
-    if (user == null) return;
-    DocumentReference ref = _firestore.collection('users').doc(user.uid);
+  Future<void> updateLocation(String city) async {
+    DocumentReference ref =
+        _firestore.collection('users').doc(FirebaseCurrentUser().currentUser.uid);
 
-    return ref.set({
-      'uid': user.uid,
-      'email': user.email,
-      'photoURL': user.photoURL,
-      'displayName': user.displayName,
-      'lastSeen': DateTime.now(),
+    return ref.update({
+//      'uid': user.uid,
+//      'email': user.email,
+//      'photoURL': user.photoURL,
+//      'displayName': user.displayName,
+//      'lastSeen': DateTime.now(),
+      'city': city,
     });
   }
 

@@ -1,11 +1,13 @@
 import 'package:dartist_app/components/input_field.dart';
 import 'package:dartist_app/components/my_button.dart';
+import 'package:dartist_app/screens/location_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:dartist_app/services/location.dart';
 
 import 'login_screen.dart';
 
@@ -33,16 +35,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _confirmPwdInputController = TextEditingController();
 
   bool showSpinner = false;
+  void initialize() async {
+    isHirer = widget.isHire;
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    isHirer = widget.isHire;
+    initialize();
   }
 
   @override
   void dispose() {
+    _usernameInputController.dispose();
+    _phoneNoController.dispose();
+    _confirmPwdInputController.dispose();
     _emailInputController.dispose();
     _pwdInputController.dispose();
     super.dispose();
@@ -141,6 +149,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         TextInputField(
                           controller: _phoneNoController,
                           textInputType: TextInputType.phone,
+                          maxLength: 10,
                           label: "Phone No.",
                         ),
                         SizedBox(
@@ -198,7 +207,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         MyButton(
                           text: 'Create Account',
-                          onPressed: () {
+                          onPressed: () async {
                             if (_pwdInputController.text != _confirmPwdInputController.text) {
                               showDialog(
                                 context: context,
@@ -270,8 +279,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => LoginScreen(),
-                                      settings: RouteSettings(name: 'Login Screen'),
+                                      builder: (context) => LocationScreen(isHirer: isHirer,),
+                                      settings: RouteSettings(name: 'Location Screen'),
                                     ));
                               },
                             ).catchError((onError) {
